@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+{% load order_status %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products | RedStore</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+{% include 'header.html' %}
+<table>
+         {% if orders %}
+            <tr>
+                <th>Order ID</th>
+                <th>Order date</th>
+                <th>Total amount</th>
+                <th>Status</th>
+            </tr>
+        {% for order in orders %}
+            <tr>
+                <td>
+                    <div class="cart-info">
+                        {{order.id}}
+                    </div>
+                </td>
+                                <td>
+                    <div class="cart-info">
+                        {{order.created_at}}
+                    </div>
+                </td>
+                                <td>
+                    <div class="cart-info">
+                        {{order.total_price}}
+                    </div>
+                </td>
+                                <td>
+                    <div class="cart-info">
+                        {% order_status order.order_status %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+        <p>No orders</p>
+        {% endif %}
+</table>
