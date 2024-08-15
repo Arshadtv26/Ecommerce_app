@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'customer',
     'order',
     'product',
-    'theme'
+    'theme',
+    'theme',
+    'payments'
 ]
 
 MIDDLEWARE = [
@@ -80,11 +82,11 @@ WSGI_APPLICATION = 'Ecommerce_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'e_commerce_db',
+        'NAME': 'ecommerce',
         'HOST': 'localhost',
         'PORT': '5432',
         'USER': 'postgres',
-        'PASSWORD': 'ecom123'
+        'PASSWORD': '123'
     }
 }
 
@@ -133,3 +135,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STRIPE_PUBLISHABLE_KEY = 'your-publishable-key'
+STRIPE_SECRET_KEY = 'your-secret-key'

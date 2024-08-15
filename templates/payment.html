@@ -1,0 +1,46 @@
+<!-- templates/payments/payment.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <h1>Make a Payment</h1>
+    <form action="{% url 'payment' %}" method="post" id="payment-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" id="submit-button">Pay</button>
+    </form>
+
+    <script>
+        var stripe = Stripe('{{ stripe_publishable_key }}');
+        var elements = stripe.elements();
+        var card = elements.create('card');
+        card.mount('#payment-form');
+
+        var form = document.getElementById('payment-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            stripe.createToken(card).then(function(result) {
+                if (result.error) {
+                    // Handle errors here
+                } else {
+                    var hiddenInput = document.createElement('input');
+                    hiddenInput.setAttribute('type', 'hidden');
+                    hiddenInput.setAttribute('name', 'stripeToken');
+                    hiddenInput.setAttribute('value', result.token.id);
+                    form.appendChild(hiddenInput);
+
+                    // Submit the form
+                    form.submit();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
